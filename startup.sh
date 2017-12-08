@@ -3,9 +3,9 @@ cd ./superset/assets
 yarn
 yarn build
 cd ../..
-sudo python setup.py install
-superset db upgrade
-superset init
+sudo pip install flask_cors --force-reinstall
+sudo superset db upgrade
+sudo superset init
 outdir=/var/log/superset/
 echo $outdir
 sudo mkdir -p $outdir

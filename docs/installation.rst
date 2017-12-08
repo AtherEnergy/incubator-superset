@@ -62,7 +62,7 @@ that the required dependencies are installed: ::
 **OSX**, system python is not recommended. brew's python also ships with pip  ::
 
     brew install pkg-config libffi openssl python
-    env LDFLAGS="-L$(brew --prefix openssl)/lib" CFLAGS="-I$(brew --prefix openssl)/include" pip install cryptography==1.7.2
+    env LDFLAGS="-L$(brew --prefix openssl)/lib" CFLAGS="-I$(brew --prefix openssl)/include" pip install cryptography==1.9
 
 **Windows** isn't officially supported at this point, but if you want to
 attempt it, download `get-pip.py <https://bootstrap.pypa.io/get-pip.py>`_, and run ``python get-pip.py`` which may need admin access. Then run the following: ::
@@ -163,7 +163,7 @@ Refer to the
 for more information.
 
 Note that *gunicorn* does not
-work on Windows so the `superser runserver` command is not expected to work
+work on Windows so the `superset runserver` command is not expected to work
 in that context. Also note that the development web
 server (`superset runserver -d`) is not intended for production use.
 
@@ -181,6 +181,11 @@ If the load balancer is inserting X-Forwarded-For/X-Forwarded-Proto headers, you
 should set `ENABLE_PROXY_FIX = True` in the superset config file to extract and use
 the headers.
 
+In case that the reverse proxy is used for providing ssl encryption, 
+an explicit definition of the `X-Forwarded-Proto` may be required.
+For the Apache webserver this can be set as follows: ::
+
+    RequestHeader set X-Forwarded-Proto "https"
 
 Configuration
 -------------
@@ -382,10 +387,10 @@ Druid
 -----
 
 * From the UI, enter the information about your clusters in the
-  ``Admin->Clusters`` menu by hitting the + sign.
+  `Sources -> Druid Clusters` menu by hitting the + sign.
 
 * Once the Druid cluster connection information is entered, hit the
-  ``Admin->Refresh Metadata`` menu item to populate
+  `Sources -> Refresh Druid Metadata` menu item to populate
 
 * Navigate to your datasources
 
@@ -498,6 +503,11 @@ look something like:
     RESULTS_BACKEND = RedisCache(
         host='localhost', port=6379, key_prefix='superset_results')
 
+Note that it's important that all the worker nodes and web servers in
+the Superset cluster share a common metadata database.
+This means that SQLite will not work in this context since it has
+limited support for concurrency and
+typically lives on the local file system.
 
 Also note that SQL Lab supports Jinja templating in queries, and that it's
 possible to overload
@@ -550,3 +560,20 @@ same server.
         return "Ok"
 
     BLUEPRINTS = [simple_page]
+
+StatsD logging
+--------------
+
+Superset is instrumented to log events to StatsD if desired. Most endpoints hit
+are logged as well as key events like query start and end in SQL Lab.
+
+To setup StatsD logging, it's a matter of configuring the logger in your
+``superset_config.py``.
+
+..code ::
+
+    from superset.stats_logger import StatsdStatsLogger
+    STATS_LOGGER = StatsdStatsLogger(host='localhost', port=8125, prefix='superset')
+
+Note that it's also possible to implement you own logger by deriving
+``superset.stats_logger.BaseStatsLogger``.

@@ -1,4 +1,5 @@
 /* eslint camelcase: 0 */
+import { triggerQuery } from '../../chart/chartAction';
 
 const $ = window.$ = require('jquery');
 
@@ -52,11 +53,6 @@ export function fetchDatasourcesFailed(error) {
 export const RESET_FIELDS = 'RESET_FIELDS';
 export function resetControls() {
   return { type: RESET_FIELDS };
-}
-
-export const TRIGGER_QUERY = 'TRIGGER_QUERY';
-export function triggerQuery(value = true) {
-  return { type: TRIGGER_QUERY, value };
 }
 
 export function fetchDatasourceMetadata(datasourceKey, alsoTriggerQuery = false) {
@@ -146,7 +142,7 @@ export function updateChartTitle(slice_name) {
   return { type: UPDATE_CHART_TITLE, slice_name };
 }
 
-export const RENDER_TRIGGERED = 'RENDER_TRIGGERED';
-export function renderTriggered() {
-  return { type: RENDER_TRIGGERED };
+export const CREATE_NEW_SLICE = 'CREATE_NEW_SLICE';
+export function createNewSlice(can_add, can_download, can_overwrite, slice, form_data) {
+  return { type: CREATE_NEW_SLICE, can_add, can_download, can_overwrite, slice, form_data };
 }

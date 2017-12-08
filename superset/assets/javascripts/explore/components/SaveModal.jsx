@@ -13,7 +13,7 @@ const propTypes = {
   onHide: PropTypes.func.isRequired,
   actions: PropTypes.object.isRequired,
   form_data: PropTypes.object,
-  user_id: PropTypes.string.isRequired,
+  userId: PropTypes.string.isRequired,
   dashboards: PropTypes.array.isRequired,
   alert: PropTypes.string,
   slice: PropTypes.object,
@@ -34,7 +34,7 @@ class SaveModal extends React.Component {
     };
   }
   componentDidMount() {
-    this.props.actions.fetchDashboards(this.props.user_id);
+    this.props.actions.fetchDashboards(this.props.userId);
   }
   onChange(name, event) {
     switch (name) {
@@ -108,7 +108,11 @@ class SaveModal extends React.Component {
     this.props.actions.saveSlice(saveUrl)
       .then((data) => {
         // Go to new slice url or dashboard url
-        window.location = data;
+        if (gotodash) {
+          window.location = data.dashboard;
+        } else {
+          window.location = data.slice.slice_url;
+        }
       });
     this.props.onHide();
   }
@@ -185,6 +189,7 @@ class SaveModal extends React.Component {
             {t('Add slice to existing dashboard')}
           </Radio>
           <Select
+            className="save-modal-selector"
             options={this.props.dashboards}
             onChange={this.onChange.bind(this, 'saveToDashboardId')}
             autoSize={false}
@@ -238,7 +243,7 @@ function mapStateToProps({ explore, saveModal }) {
     datasource: explore.datasource,
     slice: explore.slice,
     can_overwrite: explore.can_overwrite,
-    user_id: explore.user_id,
+    userId: explore.user_id,
     dashboards: saveModal.dashboards,
     alert: saveModal.saveModalAlert,
   };

@@ -1,31 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import BoundsControl from './controls/BoundsControl';
-import CheckboxControl from './controls/CheckboxControl';
-import DatasourceControl from './controls/DatasourceControl';
-import DateFilterControl from './controls/DateFilterControl';
-import FilterControl from './controls/FilterControl';
-import HiddenControl from './controls/HiddenControl';
-import SelectControl from './controls/SelectControl';
-import TextAreaControl from './controls/TextAreaControl';
-import TextControl from './controls/TextControl';
-import VizTypeControl from './controls/VizTypeControl';
-import ColorSchemeControl from './controls/ColorSchemeControl';
+import controlMap from './controls';
 
-const controlMap = {
-  BoundsControl,
-  CheckboxControl,
-  DatasourceControl,
-  DateFilterControl,
-  FilterControl,
-  HiddenControl,
-  SelectControl,
-  TextAreaControl,
-  TextControl,
-  VizTypeControl,
-  ColorSchemeControl,
-};
 const controlTypes = Object.keys(controlMap);
 
 const propTypes = {
@@ -36,6 +13,7 @@ const propTypes = {
   label: PropTypes.string.isRequired,
   choices: PropTypes.arrayOf(PropTypes.array),
   description: PropTypes.string,
+  tooltipOnClick: PropTypes.func,
   places: PropTypes.number,
   validators: PropTypes.array,
   validationErrors: PropTypes.array,
@@ -44,8 +22,10 @@ const propTypes = {
   value: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
+    PropTypes.object,
     PropTypes.bool,
-    PropTypes.array]),
+    PropTypes.array,
+    PropTypes.func]),
 };
 
 const defaultProps = {

@@ -9,5 +9,5 @@ sudo superset init
 outdir=/var/log/superset/
 echo $outdir
 sudo mkdir -p $outdir
-sudo superset runserver --port 8001 > $outdir/out.log 2> $outdir/error.log & echo $! > $outdir/pid
+superset runserver --port 8001 > $outdir/out.log 2> $outdir/error.log & echo $! > $outdir/pid
 

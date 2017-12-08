@@ -81,7 +81,7 @@ WTF_CSRF_ENABLED = True
 WTF_CSRF_EXEMPT_LIST = []
 
 # Whether to run the web server in debug mode or not
-DEBUG = True
+DEBUG = False
 FLASK_USE_RELOAD = True
 
 # Whether to show the stacktrace on 500 error

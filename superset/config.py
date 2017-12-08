@@ -106,7 +106,7 @@ APP_ICON = '/static/assets/images/superset-logo@2x.png'
 # [TimeZone List]
 # See: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 # other tz can be overridden by providing a local_config
-DRUID_IS_ACTIVE = True
+DRUID_IS_ACTIVE = False
 DRUID_TZ = tz.tzutc()
 DRUID_ANALYSIS_TYPES = ['cardinality']
 
@@ -124,7 +124,7 @@ AUTH_TYPE = AUTH_DB
 # AUTH_ROLE_ADMIN = 'Admin'
 
 # Uncomment to setup Public role name, no authentication needed
-# AUTH_ROLE_PUBLIC = 'Public'
+AUTH_ROLE_PUBLIC = 'Public'
 
 # Will allow user self registration
 # AUTH_USER_REGISTRATION = True

@@ -79,7 +79,7 @@ WTF_CSRF_ENABLED = True
 WTF_CSRF_EXEMPT_LIST = []
 
 # Whether to run the web server in debug mode or not
-DEBUG = False
+DEBUG = True
 FLASK_USE_RELOAD = True
 
 # Whether to show the stacktrace on 500 error
@@ -181,7 +181,7 @@ CACHE_CONFIG = {'CACHE_TYPE': 'null'}
 TABLE_NAMES_CACHE_CONFIG = {'CACHE_TYPE': 'null'}
 
 # CORS Options
-ENABLE_CORS = False
+ENABLE_CORS = True
 CORS_OPTIONS = {}
 
 # CSV Options: key/value pairs that will be passed as argument to DataFrame.to_csv method

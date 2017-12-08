@@ -662,6 +662,17 @@ class SqlaTable(Model, BaseDatasource):
                     metric_type='count_distinct',
                     expression="COUNT(DISTINCT {})".format(quoted)
                 ))
+
+            #ather fix
+            #adding columns of raw values
+            #since this shows us only average, sum, etc.
+            metrics.append(M(
+                    metric_name= dbcol.column_name,
+                    verbose_name= dbcol.column_name,
+                    metric_type='raw',
+                    expression=quoted
+                ))
+            
             dbcol.type = datatype
             db.session.merge(self)
             db.session.commit()
